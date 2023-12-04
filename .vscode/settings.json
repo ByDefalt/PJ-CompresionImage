@@ -1,0 +1,12 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "*.ml": "ocaml",
+        "*.embeddedhtml": "html",
+        "stdarg.h": "c",
+        "type_traits": "c",
+        "stack2.h": "c",
+        "fonction_zpixel.h": "c",
+        "stdlib.h": "c"
+    }
+}
