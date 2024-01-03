@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "fonction_zpixel.h"
 #include "fonction_pixel_image.h"
+#include <string.h>
 
 pixelsimages* initialiserpixelsimages(int hauteur,int largeur){
     pixelsimages *piximage=malloc(sizeof(pixelsimages));
@@ -88,4 +89,58 @@ void copierPixelsImages(pixelsimages* dest, const pixelsimages* src) {
     for (int i = 0; i < src->rowstride * src->hauteur; i++) {
         dest->tab[i] = src->tab[i];
     }
+}
+
+// Convertit une image bitmap en pixelsimages
+pixelsimages bitmapToPixelsImages(const char *nomFichier) {
+    FILE *fichier = fopen(nomFichier, "rb");
+    if (fichier == NULL) {
+        perror("Erreur lors de l'ouverture du fichier");
+        exit(EXIT_FAILURE);
+    }
+
+    fseek(fichier, 18, SEEK_SET); // Ignorer l'en-tête BMP fixe de 18 octets
+
+    pixelsimages image;
+    fread(&image.largeur, sizeof(int), 1, fichier);
+    fread(&image.hauteur, sizeof(int), 1, fichier);
+    fread(&image.rowstride, sizeof(int), 1, fichier);
+
+    // Allouer de la mémoire pour le tableau de pixels
+    image.tab = (unsigned char *)malloc(image.rowstride * image.hauteur*sizeof(unsigned char));
+    if (image.tab == NULL) {
+        perror("Erreur lors de l'allocation de mémoire");
+        fclose(fichier);
+        exit(EXIT_FAILURE);
+    }
+
+    // Lire les données des pixels
+    fseek(fichier, 54, SEEK_SET); // Aller au début des données des pixels
+    fread(image.tab, sizeof(unsigned char), image.rowstride * image.hauteur, fichier);
+
+    fclose(fichier);
+    return image;
+}
+
+// Convertit une structure pixelsimages en image bitmap
+void pixelsImagesToBitmap(const pixelsimages *image, const char *nomFichier) {
+    FILE *fichier = fopen(nomFichier, "wb");
+    if (fichier == NULL) {
+        perror("Erreur lors de l'ouverture du fichier");
+        exit(EXIT_FAILURE);
+    }
+
+    // Écrire l'en-tête BMP fixe
+    unsigned char enTete[54] = {66, 77, 18, 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 1, 0, 24, 0};
+    fwrite(enTete, sizeof(unsigned char), 54, fichier);
+
+    // Écrire la largeur, la hauteur et la rowstride
+    fwrite(&image->largeur, sizeof(int), 1, fichier);
+    fwrite(&image->hauteur, sizeof(int), 1, fichier);
+    fwrite(&image->rowstride, sizeof(int), 1, fichier);
+
+    // Écrire les données des pixels
+    fwrite(image->tab, sizeof(unsigned char), image->rowstride * image->hauteur, fichier);
+
+    fclose(fichier);
 }

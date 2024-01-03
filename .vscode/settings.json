@@ -7,6 +7,10 @@
         "type_traits": "c",
         "stack2.h": "c",
         "fonction_zpixel.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "fonction_pixel_image.h": "c",
+        "fonction_arbre_zpixel.h": "c",
+        "math.h": "c",
+        "stdio.h": "c"
     }
 }

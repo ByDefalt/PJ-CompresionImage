@@ -14,4 +14,6 @@ void setpixel(pixelsimages *piximage,int x,int y,unsigned char r,unsigned char g
 void afficherpixelsimages(pixelsimages *piximage);
 void projectionzpixel(zpixel *zpixel,pixelsimages *piximage);
 void copierPixelsImages(pixelsimages* dest, const pixelsimages* src);
+void pixelsImagesToBitmap(const pixelsimages *image, const char *nomFichier);
+pixelsimages bitmapToPixelsImages(const char *nomFichier);
 #endif

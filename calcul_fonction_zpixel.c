@@ -65,11 +65,13 @@ void afficherzpixel(zpixel *zpix){
     zpix->couleur.g,
     zpix->couleur.b);
 }
+
 double calculluminositer(zpixel *zpix){
     double max=MAXX(MAXX(zpix->couleur.r,zpix->couleur.g),zpix->couleur.b);
     double min=MINN(MINN(zpix->couleur.r,zpix->couleur.g),zpix->couleur.b);
     return (min+max)/2;
 }
+
 double calculsaturation(zpixel *zpix){
     double max=MAXX(MAXX(zpix->couleur.r,zpix->couleur.g),zpix->couleur.b);
     double min=MINN(MINN(zpix->couleur.r,zpix->couleur.g),zpix->couleur.b);
