@@ -79,7 +79,7 @@
 
      ```
 
-- **Utilisation du fonction en parametre :**
+- **Utilisation de fonction en parametre :**
     ```c
     GNode* ConstruireAbreZPixel(int x,int y,int taille,pixelsimages *piximage,FunctionPointer fonction){
     if(x+piximage->largeur<0 || y+piximage->hauteur<0 || x>=piximage->largeur || y>=piximage->hauteur){
